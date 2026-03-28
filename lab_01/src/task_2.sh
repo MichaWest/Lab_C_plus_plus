@@ -1,11 +1,10 @@
-
 echo "2.1. Создание скрипта write_date.sh"
 
 cat > write_date.sh << EOF
 #!/bin/bash
-CURRENT_DIR="$(pwd)"
-date >> "$CURRENT_DIR/output.log"
-echo "Текущая дата и время записаны в $CURRENT_DIR/output.log"
+CURRENT_DIR="\$(pwd)"
+date >> "\$CURRENT_DIR/output.log"
+echo "Текущая дата и время записаны в \$CURRENT_DIR/output.log"
 EOF
 
 chmod +x write_date.sh
@@ -37,15 +36,23 @@ echo "Dockerfile создан"
 echo "----------------------------------------"
 echo "2.3. Сборка образа (docker build)"
 
-docker build -t lab1:latest .
+sudo docker build -t lab1:latest .
 echo "Образ lab1:latest собран"
 
 echo "----------------------------------------"
 echo "2.4. Запуск образа и выполнение скрипта"
 
-docker run --rm lab2:latest /app/write_date.sh
+sudo docker run -it --rm lab1:latest bash -c '
+	echo "Текущая директория"
+	pwd
+	echo "----------------------------------------"
+	echo "Запуск скрипта write_data.sh"
+	/app/write_date.sh
+	echo "----------------------------------------"
+	echo "Содержимое output.log"
+	cat /home/docker_user/output.log
+	echo "----------------------------------------"	
+	echo "Список пользователей в системе"
+	cat /etc/passwd  
+'
 
-echo "----------------------------------------"
-echo "2.5. Вывод списка пользователей"
-
-docker run --rm lab1:latest awk -F: '{print $1 " (UID: " $3 ")"}' /etc/passwd | sort
