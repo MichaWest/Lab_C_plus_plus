@@ -19,7 +19,7 @@ int main() {
         clock_t start = clock();
 
         for (long long i = 0; i < n; ++i) {
-            volatile double res = compute(x); // volatile чтобы не оптимизировалось
+            double res = compute(x); 
         }
 
         clock_t end = clock();
