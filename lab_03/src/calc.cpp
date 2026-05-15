@@ -4,7 +4,7 @@
 
 double add(double a, double b);
 double sub(double a, double b);
-double my_pow(double a, int b);
+double pow(double a, int b);
 
 int main(int argc, char const **argv){
     assert(argc == 4); // 
@@ -25,10 +25,10 @@ int main(int argc, char const **argv){
             break;
         }
         case '^': {
+            res = pow(x1, x2); 
             break; 
         }
         default: {
-            res = pow(x1, x2); 
             std::cout << "[ERROR] Only +, - and ^ operations can be used.";
             break;
         }
@@ -51,9 +51,9 @@ double pow(double a, int b){
     double ans = 1; 
 
     double coeff = b >= 0 ? a : (double)1 / a; 
-    int abs_b = p>=0 & b : -b; 
-
-    for(int i=0; i < abs_p; i++){
+    int abs_b = b >=0 ? b : -b; 
+ 
+    for(int i=0; i < abs_b; i++){
         ans *= coeff; 
     }
 
