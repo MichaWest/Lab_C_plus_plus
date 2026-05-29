@@ -15,6 +15,9 @@ t_python = np.array([0, 0, 0,
                      0.750805, 1.621, 3.02, 
                      8.28, 11.938, 15.490])
 
+mask_c_plus_plus = t_c_plus_plus > 0
+mask_python = t_python > 0 
+
 fig = go.Figure()
 
 title = "Исследование зависимости времени выполнения от количество повторений в цикле"
@@ -35,6 +38,7 @@ fig.update_layout(
       ),
       yaxis=dict(
           title=y_label,
+          type="log", 
           gridcolor='lightgray',
           gridwidth=1,
       ),
@@ -57,8 +61,8 @@ fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
 
 fig.add_trace(go.Scatter(
-        x=N,
-        y=t_c_plus_plus,
+        x=N[mask_c_plus_plus],
+        y=t_c_plus_plus[mask_c_plus_plus],
         mode='lines+markers',
         name="С++",
         line=dict(color="#ff82d5", width=2),
@@ -67,8 +71,8 @@ fig.add_trace(go.Scatter(
 ))
 
 fig.add_trace(go.Scatter(
-        x=N,
-        y=t_python,
+        x=N[mask_python],
+        y=t_python[mask_python],
         mode='lines+markers',
         name="Python",
         line=dict(color="#54d7ff", width=2),
